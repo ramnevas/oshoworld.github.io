@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OshoWorld Playlist</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600;700&family=Noto+Sans+Devanagari:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #39ff14;
+      --cyan: #00cfff;
+      --dark: #060d0d;
+      --card-bg: rgba(0,255,150,0.04);
+      --card-border: rgba(0,207,255,0.25);
+      --glow-green: 0 0 18px #39ff1455, 0 0 40px #39ff1422;
+      --glow-cyan: 0 0 18px #00cfff55, 0 0 40px #00cfff22;
+    }
+
+    html, body {
+      min-height: 100vh;
+      background: var(--dark);
+      font-family: 'Rajdhani', 'Noto Sans Devanagari', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content:'';
+      position: fixed; inset: 0;
+      background-image:
+        radial-gradient(circle, rgba(0,207,255,0.12) 1px, transparent 1px),
+        radial-gradient(circle, rgba(57,255,20,0.07) 1px, transparent 1px);
+      background-size: 38px 38px, 72px 72px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .wrapper {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 38px 18px 48px;
+    }
+
+    .header { text-align: center; margin-bottom: 38px; }
+
+    .lotus-icon {
+      font-size: 2.2rem;
+      margin-bottom: 6px;
+      filter: drop-shadow(0 0 10px #39ff14aa);
+      animation: floatLotus 3s ease-in-out infinite;
+      display: block;
+    }
+
+    @keyframes floatLotus {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    .brand {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(2rem, 8vw, 3.2rem);
+      font-weight: 900;
+      letter-spacing: 2px;
+      background: linear-gradient(90deg, var(--green) 0%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 18px #00cfff66);
+    }
+
+    .by-line {
+      margin-top: 4px;
+      font-size: 0.92rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+    }
+
+    .by-line span { color: var(--cyan); font-weight: 700; }
+
+    .playlist-tag {
+      display: inline-block;
+      margin-top: 14px;
+      border: 1.5px solid var(--cyan);
+      border-radius: 30px;
+      padding: 5px 28px;
+      color: var(--cyan);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.78rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      box-shadow: var(--glow-cyan);
+    }
+
+    .playlist {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .item {
+      display: flex;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1.5px solid var(--card-border);
+      border-radius: 16px;
+      overflow: hidden;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.22s cubic-bezier(.4,2,.6,1), box-shadow 0.22s, border-color 0.22s, background 0.22s;
+      opacity: 0;
+      transform: translateX(-30px);
+      animation: slideIn 0.5s cubic-bezier(.4,0,.2,1) forwards;
+    }
+
+    .item:nth-child(1) { animation-delay: 0.10s; }
+    .item:nth-child(2) { animation-delay: 0.22s; }
+    .item:nth-child(3) { animation-delay: 0.34s; }
+    .item:nth-child(4) { animation-delay: 0.46s; }
+    .item:nth-child(5) { animation-delay: 0.58s; }
+
+    @keyframes slideIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    .item:hover { transform: translateY(-3px) scale(1.012); }
+
+    .item-1 { border-color: rgba(57,255,20,0.3); }
+    .item-1:hover { box-shadow: 0 0 28px #39ff1444, 0 8px 30px #00000077; border-color: var(--green); background: rgba(57,255,20,0.07); }
+
+    .item-2 { border-color: rgba(0,207,255,0.3); }
+    .item-2:hover { box-shadow: 0 0 28px #00cfff44, 0 8px 30px #00000077; border-color: var(--cyan); background: rgba(0,207,255,0.07); }
+
+    .item-3 { border-color: rgba(57,255,20,0.3); }
+    .item-3:hover { box-shadow: 0 0 28px #39ff1444, 0 8px 30px #00000077; border-color: var(--green); background: rgba(57,255,20,0.07); }
+
+    .item-4 { border-color: rgba(0,207,255,0.3); }
+    .item-4:hover { box-shadow: 0 0 28px #00cfff44, 0 8px 30px #00000077; border-color: var(--cyan); background: rgba(0,207,255,0.07); }
+
+    .item-5 { border-color: rgba(57,255,20,0.3); }
+    .item-5:hover { box-shadow: 0 0 28px #39ff1444, 0 8px 30px #00000077; border-color: var(--green); background: rgba(57,255,20,0.07); }
+
+    .num {
+      min-width: 68px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px 10px;
+      border-right: 1.5px solid rgba(255,255,255,0.07);
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .item-1 .num, .item-3 .num, .item-5 .num { color: var(--green); text-shadow: var(--glow-green); border-right-color: rgba(57,255,20,0.18); }
+    .item-2 .num, .item-4 .num { color: var(--cyan); text-shadow: var(--glow-cyan); border-right-color: rgba(0,207,255,0.18); }
+
+    .content {
+      flex: 1;
+      padding: 18px 16px 18px 20px;
+    }
+
+    .hindi-title {
+      font-family: 'Noto Sans Devanagari', sans-serif;
+      font-size: clamp(1.15rem, 4vw, 1.45rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 5px;
+    }
+
+    .item-1 .hindi-title, .item-3 .hindi-title, .item-5 .hindi-title { color: var(--green); }
+    .item-2 .hindi-title, .item-4 .hindi-title { color: var(--cyan); }
+
+    .subtitle {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.88rem;
+      font-weight: 600;
+    }
+
+    .arrow { color: rgba(255,255,255,0.4); font-size: 0.8rem; }
+
+    .icon-area {
+      min-width: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 14px;
+      font-size: 2.1rem;
+      filter: drop-shadow(0 0 10px currentColor);
+    }
+
+    .item-1 .icon-area, .item-3 .icon-area, .item-5 .icon-area { color: var(--green); }
+    .item-2 .icon-area, .item-4 .icon-area { color: var(--cyan); }
+
+    .item:hover .icon-area {
+      animation: pulse 0.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulse {
+      from { filter: drop-shadow(0 0 6px currentColor); transform: scale(1); }
+      to   { filter: drop-shadow(0 0 22px currentColor); transform: scale(1.13); }
+    }
+
+    .footer { margin-top: 44px; text-align: center; }
+
+    .footer-lotus {
+      font-size: 1.6rem;
+      filter: drop-shadow(0 0 10px var(--cyan));
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .circuit-line {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .circuit-line::before,
+    .circuit-line::after {
+      content: '';
+      flex: 1;
+      max-width: 110px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    }
+
+    .tagline {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      background: linear-gradient(90deg, var(--green), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+
+    <div class="header">
+      <span class="lotus-icon">🪷</span>
+      <div class="brand">OSHOWORLD</div>
+      <div class="by-line">Created by <span>Ram Nevash</span></div>
+      <div class="playlist-tag">Playlist</div>
+    </div>
+
+    <div class="playlist">
+
+      <!-- 01 - Main Mrityu Sikhata Hun -->
+      <a class="item item-1"
+         href="https://oshoworld.com/main-mrityu-sikhata-hun-by-osho-01-15"
+         target="_blank" rel="noopener">
+        <div class="num">01</div>
+        <div class="content">
+          <div class="hindi-title">मैं मृत्यु सिखाता हूँ</div>
+          <div class="subtitle"><span class="arrow">→</span> Fear, ego, deep life understanding</div>
+        </div>
+        <div class="icon-area">💀</div>
+      </a>
+
+      <!-- 02 - Jeevan Rahasya -->
+      <a class="item item-2"
+         href="https://oshoworld.com/jevan-rahasya-by-osho-01-13"
+         target="_blank" rel="noopener">
+        <div class="num">02</div>
+        <div class="content">
+          <div class="hindi-title">जीवन रहस्य</div>
+          <div class="subtitle"><span class="arrow">→</span> Life meaning, clarity, direction</div>
+        </div>
+        <div class="icon-area">🌳</div>
+      </a>
+
+      <!-- 03 - Sambhog Se Samadhi Ki Oar -->
+      <a class="item item-3"
+         href="https://oshoworld.com/sambhog-se-samadhi-ki-oar-by-osho-01-16"
+         target="_blank" rel="noopener">
+        <div class="num">03</div>
+        <div class="content">
+          <div class="hindi-title">संभोग से समाधि की ओर</div>
+          <div class="subtitle"><span class="arrow">→</span> Energy transformation, consciousness expansion</div>
+        </div>
+        <div class="icon-area">∞</div>
+      </a>
+
+      <!-- 04 - Dhyan Sutra -->
+      <a class="item item-4"
+         href="https://oshoworld.com/dhyan-sutra-by-osho-1-9"
+         target="_blank" rel="noopener">
+        <div class="num">04</div>
+        <div class="content">
+          <div class="hindi-title">ध्यान सूत्र</div>
+          <div class="subtitle"><span class="arrow">→</span> Meditation methods, silence, stable mind</div>
+        </div>
+        <div class="icon-area">🪷</div>
+      </a>
+
+      <!-- 05 - Main Kaun Hun -->
+      <a class="item item-5"
+         href="https://oshoworld.com/main-kaun-hun-by-osho-01-11"
+         target="_blank" rel="noopener">
+        <div class="num">05</div>
+        <div class="content">
+          <div class="hindi-title">मैं कौन हूँ</div>
+          <div class="subtitle"><span class="arrow">→</span> Self-inquiry, identity, deep awareness</div>
+        </div>
+        <div class="icon-area">🧠</div>
+      </a>
+
+    </div>
+
+    <div class="footer">
+      <span class="footer-lotus">🪷</span>
+      <div class="circuit-line">
+        <div class="tagline">Listen &nbsp;·&nbsp; Learn &nbsp;·&nbsp; Improve</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
